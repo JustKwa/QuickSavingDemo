@@ -33,10 +33,13 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Install terser
+        run: npm install -g terser
+      - name: Minify JS files
+        run: find web-mobile -type f -name "*.js" -exec terser {} -o {} --compress --mangle \;
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
           path: 'web-mobile'
       - name: Deploy to GitHub Pages
         id: deployment
